@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tekton-demo
+  labels:
+    app: tekton-demo
+spec:
+  selector:
+    matchLabels:
+      app: tekton-demo
+  template:
+    metadata:
+      labels:
+        app: tekton-demo
+    spec:
+      containers:
+      - name: tekton-demo
+        image: aweimeow/tekton-demo:latest
+        ports:
+        - containerPort: 8000
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8000
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8000
+        resources:
+          limits:
+            cpu: 100m
+            memory: 256Mi
+          requests:
+            cpu: 80m
+            memory: 128Mi
+
